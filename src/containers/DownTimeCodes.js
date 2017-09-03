@@ -1,40 +1,38 @@
 import React from "react";
-import HardWareKeyboardArrowRight from "material-ui/svg-icons/hardware/keyboard-arrow-right";
-import HardWareKeyboardArrowDown from "material-ui/svg-icons/hardware/keyboard-arrow-down";
+import Badge from "material-ui/Badge";
 import List from "components/DownTimeCodes";
+import { grey300, pink500 } from "material-ui/styles/colors";
 
-/**
- * @param node
- * @returns {boolean}
- */
-const hasChildren = (node) => {
-  return node.children.length >= 1;
-};
+const configStyles = (node) => {
+  return { top: 0, right: 30, backgroundColor: node.children.length > 0 ? pink500 : grey300, color: '#fff' };
+}
 
 /**
  * @param node
  * @returns {XML}
  */
-const arrowSelector = (node) => {
-  return hasChildren(node) ? node.initiallyOpen ? <HardWareKeyboardArrowDown /> : <HardWareKeyboardArrowRight /> : <span />;
+const configBadges = (node) => {
+  return <Badge badgeStyle={configStyles(node)} badgeContent={node.children.length}/>;
 };
 
 export default class DownTimeCodes extends React.Component {
 
   state = {
-    RootObject: []
+    RootObject: [],
+    isLoading: true
   }
 
-  componentDidMount = async () => {
-    let response = await fetch('https://api.myjson.com/bins/tqf5l');
+  componentDidMount = async() => {
+    let response = await fetch('https://api.myjson.com/bins/dlsdl');
     let data = await response.json();
-    return this.setState({RootObject: data});
+    setTimeout(() => {
+      return this.setState({ RootObject: data, isLoading: false });
+    }, 2000);
   }
-
-  arrowSelector = arrowSelector
 
   /**
    * @param event
+   * @returns {*}
    */
   onClickHandler = (event) => {
     const { RootObject } = this.state;
@@ -43,12 +41,12 @@ export default class DownTimeCodes extends React.Component {
       return a.id === id ? Object.assign({}, a, { open: a.open ? false : true }) : a;
     });
 
-    this.setState({ RootObject: newRootObject });
+    return this.setState({ RootObject: newRootObject });
   }
 
   render() {
     return (
-      <List RootObject={this.state.RootObject} onClickHandler={this.onClickHandler} arrowSelector={this.arrowSelector}/>
+      <List state={this.state} onClickHandler={this.onClickHandler} configBadges={configBadges}/>
     );
   }
 }

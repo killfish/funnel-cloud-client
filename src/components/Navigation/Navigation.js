@@ -1,10 +1,15 @@
-import React from 'react';
-import AppBar from 'material-ui/AppBar';
+import React from "react";
+import AppBar from "material-ui/AppBar";
+import DTToolbar from "components/Toolbar";
 
 const Navigation = () => (
-  <AppBar
-    title={<span>Funnel Cloud</span>}
-  />
+  <div>
+    <AppBar
+      showMenuIconButton={false}
+      title={<span>Funnel Cloud</span>}
+    />
+    <DTToolbar />
+  </div>
 );
 
 export default Navigation;

@@ -10,14 +10,14 @@ class App extends Component {
   render() {
     return (
         <Grid>
-          <Paper zDepth={1} rounded={false}>
           <Row>
-            <Col xs={12} md={12}>
+            <Col xs={12} md={7}>
+              <Paper zDepth={1} rounded={false}>
               <Navigation />
               <DownTimeCodesContainer />
+              </Paper>
             </Col>
           </Row>
-          </Paper>
         </Grid>
     );
   }

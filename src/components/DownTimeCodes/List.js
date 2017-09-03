@@ -1,15 +1,21 @@
 import React from "react";
+import CircularProgress from "material-ui/CircularProgress";
 import { List, ListItem } from "material-ui/List";
 
 const style = {
-  borderBottom: '1px solid #eee',
+  listItem: {
+    borderBottom: '1px solid #eee',
+  },
+  nestedList: {
+    padding: 0,
+  },
+  loader: {
+    margin: 25,
+    textAlign: 'center'
+  }
 };
 
-const nestedListStyle = {
-  padding: 0,
-};
-
-const mapStructure = (nodes, onClickHandler, arrowSelector) => {
+const mapStructure = (nodes, onClickHandler, configBadges) => {
   if (nodes) {
     return nodes.map(node => (
       <ListItem
@@ -17,22 +23,28 @@ const mapStructure = (nodes, onClickHandler, arrowSelector) => {
         primaryText={node.primaryText}
         initiallyOpen={node.initiallyOpen}
         primaryTogglesNestedList={true}
-        leftIcon={arrowSelector(node)}
-        style={style}
-        nestedListStyle={nestedListStyle}
+        leftIcon={configBadges(node)}
+        style={style.listItem}
+        nestedListStyle={style.nestedList}
         onClick={onClickHandler}
         data-key={node.id}
-        nestedItems={mapStructure(node.children, onClickHandler, arrowSelector)}
+        nestedItems={mapStructure(node.children, onClickHandler, configBadges)}
       />
     ));
   }
 };
 
+
 const DownTimeCodesList = (props) => {
   return (
-    <List style={nestedListStyle}>
-      {mapStructure(props.RootObject, props.onClickHandler, props.arrowSelector)}
-    </List>
+    <div> 
+      { props.state.isLoading
+        ? <CircularProgress style={style.loader} />
+        : <List style={style.nestedList}>
+        {mapStructure(props.state.RootObject, props.onClickHandler, props.configBadges)}
+      </List>
+      }
+    </div>
   );
 };
 
