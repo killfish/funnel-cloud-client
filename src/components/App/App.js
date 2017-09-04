@@ -11,10 +11,10 @@ class App extends Component {
     return (
         <Grid>
           <Row>
-            <Col xs={12} md={7}>
+            <Col xs={12} md={12}>
               <Paper zDepth={1} rounded={false}>
               <Navigation />
-              <DownTimeCodesContainer />
+              <DownTimeCodesContainer isList={true} />
               </Paper>
             </Col>
           </Row>

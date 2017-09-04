@@ -1,0 +1,23 @@
+.codes--actions {
+  position: absolute;
+  right: 50px;
+  top: 1px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+
+.codes--action {
+  background: transparent;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.codes:hover .codes--actions {
+  opacity: 1;
+}
+
+.codes--action:hover svg, .codes--action:focus svg {
+  color: #000000 !important;
+}

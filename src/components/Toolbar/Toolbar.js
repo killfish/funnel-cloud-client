@@ -2,11 +2,13 @@ import React from "react";
 import FloatingActionButton from "material-ui/FloatingActionButton";
 import ContentAdd from "material-ui/svg-icons/content/add";
 import { Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle } from "material-ui/Toolbar";
-import Toggle from 'material-ui/Toggle';
 
 const style = {
   button: {
     margin: '0 0 0 25px',
+    position: ' relative',
+    top: -1,
+    right: -1,
   },
   addTitle: {
     fontSize: '15px',
