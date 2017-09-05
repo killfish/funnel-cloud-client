@@ -8,6 +8,8 @@ export const DELETE_DTCODE = 'DELETE_DTCODE';
 export const SELECT_DTCODE = 'SELECT_DTCODE';
 export const ADD_DTCODE = 'ADD_DTCODE';
 export const UPDATE_DTCODE = 'UPDATE_DTCODE';
+export const MODAL_OPEN = 'MODAL_OPEN';
+export const MODAL_CLOSE = 'MODAL_CLOSE';
 
 /**
  * @param dispatch
@@ -123,5 +125,16 @@ export function updateDTCode(code = {}) {
   return {
     type: UPDATE_DTCODE,
     code: code,
+  }
+}
+
+/**
+ * @param open
+ * @returns {{type: string, open: *}}
+ */
+export function toggleModal(open) {
+  return {
+    type: open ? MODAL_OPEN : MODAL_CLOSE,
+    open: open,
   }
 }

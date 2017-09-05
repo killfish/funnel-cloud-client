@@ -1,69 +1,48 @@
 import React from 'react';
+import SubmitButton from 'components/DownTimeCodes/Forms/Update/SubmitButton';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import "./Dialog.css";
+import get from 'lodash/get';
 
-export default class CodeDialog extends React.Component {
-  state = {
-    open: false,
-    activeId: null
-  };
+/**
+ * @param props
+ * @returns {XML}
+ * @constructor
+ */
+const CodeDialog = (props) => {
 
-  handleOpen = (e) => {
-    e.stopPropagation();
-    const id = e.currentTarget.dataset.id;
-    this.setState({open: true, activeId: id});
-  };
+  const actions = [
+    <FlatButton
+      label="Cancel"
+      primary={true}
+      onClick={() => {props.closeModal(props.key)}}
+    />,
+    <SubmitButton />,
+  ];
 
-  handleClose = (e) => {
-    switch (this.props.action) {
-      case 'add':
-      case 'update':
-        this.props.onClick(this.state.activeId);
-        break;
-      case 'delete':
-        this.props.onClick(this.state.activeId);
-        break;
-    }
-
-    this.setState({open: false, activeId: null});
-  };
-
-  render() {
-    const actions = [
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onClick={this.handleClose}
-      />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onClick={this.handleClose}
-      />,
-    ];
-
-    return (
-      <span>
+  return (
+    <span>
         <IconButton
-          data-id={this.props.id}
-          onClick={this.handleOpen}
-          tooltip={this.props.tooltip}
+          data-id={props.id}
+          onClick={() => {props.openModal(props.key)}}
+          tooltip={props.tooltip}
         >
-          {this.props.icon}
+          {props.icon}
         </IconButton>
 
         <Dialog
           className={"code--dialog"}
-          title={this.props.dialogTitle}
+          title={props.dialogTitle}
           actions={actions}
           modal={true}
-          open={this.state.open}
+          open={get(props.modals, `[${props.key}].open`, false)}
         >
-          {this.props.children}
+          {props.children}
         </Dialog>
       </span>
-    );
-  }
-}
+  );
+};
+
+export default CodeDialog;

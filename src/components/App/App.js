@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DownTimeCodesContainer from "containers/DownTimeCodes";
+import { DownTimeCodesContainer } from "containers/DownTimeCodes";
 import Navigation from "components/Navigation";
 import Paper from "material-ui/Paper";
 import { Grid, Row, Col } from "react-flexbox-grid";

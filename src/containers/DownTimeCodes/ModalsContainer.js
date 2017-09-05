@@ -1,22 +1,15 @@
 import React from 'react';
-import List from 'components/DownTimeCodes';
+import Dialog from 'components/DownTimeCodes/Dialog';
 import { connect } from 'react-redux';
 import {
-  fetchCodes,
-  deleteDTCode,
-  addDTCode,
-  updateDTCode
-} from 'containers/DownTimeCodes/actions/downtimeCodes';
+  openModal,
+  closeModal
+} from 'containers/DownTimeCodes/actions/modals';
 
-class DownTimeCodes extends React.Component {
-
-  componentDidMount() {
-    if (this.props.isList) this.props.fetchCodes();
-  }
-
+class Modals extends React.Component {
   render() {
     return (
-      <List {...this.props}/>
+      <Dialog {...this.props}/>
     );
   }
 }
@@ -24,14 +17,12 @@ class DownTimeCodes extends React.Component {
 /**
  * @param state
  * @param ownProps
- * @returns {{codes: (*|Array), isFetching: (*|boolean), activeCode: (state.activeCode|{}), isList: *}}
+ * @returns {{props: *}}
  */
 const mapStateToProps = (state, ownProps) => {
   return {
-    codes : state.codes.payload || [],
-    isFetching: state.codes.isFetching,
-    activeCode: state.activeCode,
-    isList: ownProps.isList
+    modals: state.modals,
+    props: ownProps
   }
 };
 
@@ -41,22 +32,14 @@ const mapStateToProps = (state, ownProps) => {
  */
 const mapDispatchToProps = dispatch => {
   return {
-    fetchCodes: () => {
-      dispatch(fetchCodes());
+    openModal: (key) => {
+      dispatch(openModal(key));
     },
-    actions: {
-      handleDelete: id => {
-        dispatch(deleteDTCode(id));
-      },
-      handleAdd: code => {
-        dispatch(addDTCode(code));
-      },
-      handleUpdate: code => {
-        dispatch(updateDTCode(code));
-      },  
+    closeModal: (modalName) => {
+      dispatch(closeModal(key));
     },
     dispatch
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DownTimeCodes);
+export default connect(mapStateToProps, mapDispatchToProps)(Modals);

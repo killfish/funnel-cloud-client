@@ -1,3 +1,4 @@
-import DownTimeCodes from './DownTimeCodes';
+import DownTimeCodesContainer from './DownTimeCodesContainer';
+import ModalsContainer from './ModalsContainer';
 
-export default DownTimeCodes;
+export { DownTimeCodesContainer, ModalsContainer };
