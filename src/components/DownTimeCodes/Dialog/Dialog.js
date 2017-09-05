@@ -17,7 +17,7 @@ const CodeDialog = (props) => {
     <FlatButton
       label="Cancel"
       primary={true}
-      onClick={() => {props.closeModal(props.key)}}
+      onClick={() => {props.closeModal(props.modalKey)}}
     />,
     <SubmitButton />,
   ];
@@ -26,7 +26,7 @@ const CodeDialog = (props) => {
     <span>
         <IconButton
           data-id={props.id}
-          onClick={() => {props.openModal(props.key)}}
+          onClick={() => {props.openModal(props.modalKey)}}
           tooltip={props.tooltip}
         >
           {props.icon}
@@ -37,7 +37,7 @@ const CodeDialog = (props) => {
           title={props.dialogTitle}
           actions={actions}
           modal={true}
-          open={get(props.modals, `[${props.key}].open`, false)}
+          open={get(props.modals, `[${props.modalKey}].open`, false)}
         >
           {props.children}
         </Dialog>

@@ -28,7 +28,7 @@ const Actions = (props) => {
       <ModalsContainer
         id={props.id}
         action={"update"}
-        key={shortid.generate()}
+        modalKey={shortid.generate()}
         onClick={props.handleUpdate}
         tooltip={"Update Code"}
         dialogTitle={"Update Code"}
@@ -40,7 +40,7 @@ const Actions = (props) => {
       <ModalsContainer
         id={props.id}
         action={"delete"}
-        key={shortid.generate()}
+        modalKey={shortid.generate()}
         onClick={props.handleDelete}
         tooltip={"Delete Code"}
         dialogTitle={"Delete Code"}
@@ -51,7 +51,7 @@ const Actions = (props) => {
       <ModalsContainer
         id={props.id}
         action={"add"}
-        key={shortid.generate()}
+        modalKey={shortid.generate()}
         onClick={props.handleAdd}
         tooltip={"Add Code"}
         dialogTitle={"Add Code"}
