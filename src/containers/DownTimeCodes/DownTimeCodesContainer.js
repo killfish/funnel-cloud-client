@@ -23,7 +23,8 @@ class DownTimeCodes extends React.Component {
 
 /**
  * @param state
- * @returns {{RootObject: (*|Array)}}
+ * @param ownProps
+ * @returns {{codes: (*|Array), isFetching: (*|boolean), activeCode: (state.activeCode|{}), isList: *}}
  */
 const mapStateToProps = (state, ownProps) => {
   return {
