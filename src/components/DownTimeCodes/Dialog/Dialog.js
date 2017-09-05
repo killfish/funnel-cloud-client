@@ -3,6 +3,7 @@ import UpdateButton from "components/DownTimeCodes/Forms/Update/SubmitButton";
 import AddButton from "components/DownTimeCodes/Forms/Add/SubmitButton";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
+import RaisedButton from "material-ui/RaisedButton";
 import IconButton from "material-ui/IconButton";
 import "./Dialog.css";
 import get from "lodash/get";
@@ -31,7 +32,7 @@ const CodeDialog = (props) => {
       break;
     case 'delete':
       actions.push(
-        <FlatButton
+        <RaisedButton
           label="Delete"
           secondary={true}
           onClick={(e) => {
