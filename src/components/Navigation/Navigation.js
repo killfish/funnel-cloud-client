@@ -1,6 +1,5 @@
 import React from "react";
 import AppBar from "material-ui/AppBar";
-import DTToolbar from "components/Toolbar";
 import logo from "assets/images/funnel_cloud@2x.png";
 import "./Navigation.css";
 
@@ -18,7 +17,6 @@ const Navigation = () => (
       showMenuIconButton={false}
       title={<div><img src={logo} className="fc-logo"/> <span>Funnel Cloud</span></div>}
     />
-    <DTToolbar />
   </div>
 );
 
