@@ -35,7 +35,7 @@ const mapDispatchToProps = dispatch => {
     openModal: (key) => {
       dispatch(openModal(key));
     },
-    closeModal: (modalName) => {
+    closeModal: (key) => {
       dispatch(closeModal(key));
     },
     dispatch
