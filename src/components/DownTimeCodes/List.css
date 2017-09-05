@@ -1,0 +1,15 @@
+.codes-wrapper {
+  background: #eee;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.codes-wrapper .codes {
+  font-size: 14px !important;
+  border-bottom-color: #fff !important;
+}
+
+/*
+.codes:last-child {
+  border-bottom: none !important;
+}*/

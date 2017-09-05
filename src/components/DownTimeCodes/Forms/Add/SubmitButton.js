@@ -5,9 +5,9 @@ import { submit } from 'redux-form';
 
 const RemoteSubmitButton = ({dispatch}) => (
   <FlatButton
-    label="Update"
+    label="Add"
     secondary={true}
-    onClick={() => dispatch(submit('updateCode'))}
+    onClick={() => dispatch(submit('addCode'))}
   />
 )
 

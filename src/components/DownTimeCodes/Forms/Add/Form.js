@@ -1,14 +1,14 @@
 /** TODO: Consolidate Add and Update Form into one Components **/
 
 import React from "react";
-import submit from 'components/DownTimeCodes/Forms/Update/submit';
+import submit from 'components/DownTimeCodes/Forms/Add/submit';
 import { Field, reduxForm } from 'redux-form';
 import {
   TextField
 } from 'redux-form-material-ui'
 import { DownTimeCodesContainer } from "containers/DownTimeCodes";
 
-const CodeUpdate = props => {
+const CodeAdd = props => {
   const { handleSubmit } = props;
   return (
     <form onSubmit={handleSubmit}>
@@ -26,8 +26,8 @@ const CodeUpdate = props => {
 }
 
 export const config = {
-  form: 'updateCode',
+  form: 'addCode',
   onSubmit: submit
 }
 
-export default reduxForm(config)(CodeUpdate);
+export default reduxForm(config)(CodeAdd);

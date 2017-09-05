@@ -3,6 +3,7 @@ import List from 'components/DownTimeCodes';
 import { connect } from 'react-redux';
 import {
   fetchCodes,
+  selectDTCode,
   deleteDTCode,
   addDTCode,
   updateDTCode
@@ -30,7 +31,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     codes : state.codes.payload || [],
     isFetching: state.codes.isFetching,
-    activeCode: state.activeCode,
     isList: ownProps.isList
   }
 };
@@ -45,6 +45,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchCodes());
     },
     actions: {
+      handleSelect: id => {
+        dispatch(selectDTCode(id));
+      },
       handleDelete: id => {
         dispatch(deleteDTCode(id));
       },

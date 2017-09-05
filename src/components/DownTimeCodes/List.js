@@ -6,6 +6,7 @@ import Actions from "components/DownTimeCodes/Actions";
 import Checkbox from 'material-ui/Checkbox';
 import { grey300, pink500 } from "material-ui/styles/colors";
 import Badge from "material-ui/Badge";
+import './List.css';
 
 const style = {
   listItem: {
@@ -13,6 +14,9 @@ const style = {
   },
   nestedList: {
     padding: 0,
+  },
+  innerDivStyle: {
+    paddingLeft: 57,
   },
   loader: {
     marginTop: 50,
@@ -44,24 +48,24 @@ const configBadges = (node) => {
  * @param isList
  * @returns {*|Object|Array}
  */
-const mapStructure = (nodes, actions, isList) => {
+const mapStructure = (nodes, actions, activeCode, isList) => {
   if (nodes) {
     return nodes.map(node => (
       <ListItem
         className={"codes"}
         key={node.id}
         primaryText={node.primaryText}
-        initiallyOpen={isList ? false : true}
+        initiallyOpen={false}
         primaryTogglesNestedList={true}
         leftIcon={isList ? configBadges(node) : <Checkbox onClick={(e) => { e.stopPropagation();} } />}
         style={style.listItem}
+        innerDivStyle={style.innerDivStyle}
         nestedListStyle={style.nestedList}
-        data-key={node.id}
-        nestedItems={mapStructure(node.children, actions, isList)}
+        nestedItems={mapStructure(node.children, actions, activeCode, isList)}
       >
         {isList &&
            <Actions
-              id={node.id}
+              {...node}
               {...actions}
             />
         }
@@ -77,11 +81,11 @@ const mapStructure = (nodes, actions, isList) => {
  */
 const DownTimeCodesList = (props) => {
   return (
-    <div>
+    <div className={props.isList ? "codes-wrapper-list" : "codes-wrapper"}>
       { props.isFetching
         ? <CircularProgress style={style.loader}/>
         : <List style={style.nestedList}>
-        {mapStructure(buildTree(props.codes), {...props.actions}, props.isList)}
+        {mapStructure(buildTree(props.codes), {...props.actions}, props.activeCode, props.isList)}
       </List>
       }
     </div>

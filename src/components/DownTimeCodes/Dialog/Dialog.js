@@ -1,10 +1,11 @@
-import React from 'react';
-import SubmitButton from 'components/DownTimeCodes/Forms/Update/SubmitButton';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
-import IconButton from 'material-ui/IconButton';
+import React from "react";
+import UpdateButton from "components/DownTimeCodes/Forms/Update/SubmitButton";
+import AddButton from "components/DownTimeCodes/Forms/Add/SubmitButton";
+import Dialog from "material-ui/Dialog";
+import FlatButton from "material-ui/FlatButton";
+import IconButton from "material-ui/IconButton";
 import "./Dialog.css";
-import get from 'lodash/get';
+import get from "lodash/get";
 
 /**
  * @param props
@@ -17,16 +18,44 @@ const CodeDialog = (props) => {
     <FlatButton
       label="Cancel"
       primary={true}
-      onClick={() => {props.closeModal(props.modalKey)}}
-    />,
-    <SubmitButton />,
+      onClick={(e) => {
+        e.stopPropagation();
+        props.closeModal(props.modalKey);
+      }}
+    />
   ];
+
+  switch (props.action) {
+    case 'update':
+      actions.push(<UpdateButton />);
+      break;
+    case 'delete':
+      actions.push(
+        <FlatButton
+          label="Delete"
+          secondary={true}
+          onClick={(e) => {
+            e.stopPropagation();
+            props.onSubmit(props.id);
+            props.closeModal(props.modalKey);
+          }}
+        />);
+      break;
+    case 'add':
+      actions.push(<AddButton />);
+      break;
+    default:
+  }
 
   return (
     <span>
         <IconButton
           data-id={props.id}
-          onClick={() => {props.openModal(props.modalKey)}}
+          onClick={(e) => {
+            e.stopPropagation();
+            props.onClick(props.id);
+            props.openModal(props.modalKey);
+          }}
           tooltip={props.tooltip}
         >
           {props.icon}
