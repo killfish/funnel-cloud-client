@@ -15,7 +15,7 @@ const Navigation = () => (
     <AppBar
       titleStyle={styles.titleStyle}
       showMenuIconButton={false}
-      title={<div><img src={logo} className="fc-logo"/> <span>Funnel Cloud</span></div>}
+      title={<div><img src={logo} className="fc-logo" alt="Funnel Cloud Logo"/> <span>Funnel Cloud</span></div>}
     />
   </div>
 );
