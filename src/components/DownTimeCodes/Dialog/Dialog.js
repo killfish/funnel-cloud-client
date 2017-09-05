@@ -1,10 +1,7 @@
 import React from "react";
-import UpdateButton from "components/DownTimeCodes/Forms/Update/SubmitButton";
-import AddButton from "components/DownTimeCodes/Forms/Add/SubmitButton";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
-import RaisedButton from "material-ui/RaisedButton";
-import IconButton from "material-ui/IconButton";
+import cloneChildrenWithProps from "util/cloneChildrenWithProps";
 import "./Dialog.css";
 import get from "lodash/get";
 
@@ -26,50 +23,39 @@ const CodeDialog = (props) => {
     />
   ];
 
-  switch (props.action) {
-    case 'update':
-      actions.push(<UpdateButton />);
-      break;
-    case 'delete':
-      actions.push(
-        <RaisedButton
-          label="Delete"
-          secondary={true}
-          onClick={(e) => {
-            e.stopPropagation();
-            props.onSubmit(props.id);
-            props.closeModal(props.modalKey);
-          }}
-        />);
-      break;
-    case 'add':
-      actions.push(<AddButton />);
-      break;
-    default:
-  }
+  const combinedActions = actions.concat(props.actions);
+
+  /**
+   * @param e
+   */
+  const handleClick = (e) => {
+    e.stopPropagation();
+    props.openModal(props.modalKey);
+  };
+
+  const formWithProps = cloneChildrenWithProps(props.children, {
+    initialValues: {
+      id: props.id,
+      modalKey: props.modalKey,
+      ...props.additionalProps
+    }
+  });
+
+  const actionButtonWithProps = cloneChildrenWithProps(props.actionButton, { handleClick });
 
   return (
     <span>
-        <IconButton
-          data-id={props.id}
-          onClick={(e) => {
-            e.stopPropagation();
-            props.onClick(props.id);
-            props.openModal(props.modalKey);
-          }}
-          tooltip={props.tooltip}
-        >
-          {props.icon}
-        </IconButton>
+
+        {actionButtonWithProps}
 
         <Dialog
           className={"code--dialog"}
           title={props.dialogTitle}
-          actions={actions}
+          actions={combinedActions}
           modal={true}
           open={get(props.modals, `[${props.modalKey}].open`, false)}
         >
-          {props.children}
+          {formWithProps}
         </Dialog>
       </span>
   );

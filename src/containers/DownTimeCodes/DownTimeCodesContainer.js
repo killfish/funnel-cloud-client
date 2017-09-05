@@ -1,5 +1,6 @@
 import React from 'react';
 import List from 'components/DownTimeCodes';
+import DTToolbar from "components/Toolbar";
 import { connect } from 'react-redux';
 import {
   fetchCodes,
@@ -10,14 +11,16 @@ import {
 } from 'containers/DownTimeCodes/actions/downtimeCodes';
 
 class DownTimeCodes extends React.Component {
-
   componentDidMount() {
     if (this.props.isList) this.props.fetchCodes();
   }
 
   render() {
     return (
-      <List {...this.props}/>
+      <div>
+        {this.props.isList && <DTToolbar {...this.props} />}
+        <List {...this.props} />
+      </div>
     );
   }
 }
