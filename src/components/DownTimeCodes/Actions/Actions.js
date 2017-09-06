@@ -6,7 +6,7 @@ import { ModalsContainer } from "containers/DownTimeCodes";
 import UpdateForm from "components/DownTimeCodes/Forms/Update/Form";
 import AddForm from "components/DownTimeCodes/Forms/Add/Form";
 import DeleteForm from "components/DownTimeCodes/Forms/Delete/Form";
-import ActionUpdate from "material-ui/svg-icons/action/update";
+import EditorModeEdit from "material-ui/svg-icons/editor/mode-edit";
 import UpdateSubmitButton from "components/DownTimeCodes/Forms/Update/SubmitButton";
 import AddSubmitButton from "components/DownTimeCodes/Forms/Add/SubmitButton";
 import DeleteSubmitButton from "components/DownTimeCodes/Forms/Delete/SubmitButton";
@@ -23,19 +23,19 @@ const styles = {
 };
 
 const ActionUpdateButton = (props) => (
-  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Update Code"}>
-    <ActionUpdate  className="codes--icon"/>
+  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Edit Code"}>
+    <EditorModeEdit  className="codes--icon"/>
   </IconButton>
 );
 
 const ActionDeleteButton = (props) => (
-  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Update Code"}>
+  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Delete Code"}>
     <ActionDelete className="codes--icon"/>
   </IconButton>
 );
 
 const ActionAddButton = (props) => (
-  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Update Code"}>
+  <IconButton onClick={props.handleClick} style={styles.actions} tooltip={"Add Code"}>
     <ContentAddCircle className="codes--icon"/>
   </IconButton>
 );
