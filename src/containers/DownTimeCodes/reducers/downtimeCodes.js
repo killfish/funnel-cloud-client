@@ -1,10 +1,9 @@
 import {
   REQUEST_DTCODES,
   RECEIVE_DTCODES,
-  DELETE_DTCODE,
-  SELECT_DTCODE,
-  ADD_DTCODE,
-  UPDATE_DTCODE
+  DELETE_RECEIVE_DTCODE,
+  ADD_RECEIVE_DTCODE,
+  UPDATE_RECEIVE_DTCODE
 } from 'containers/DownTimeCodes/actions/downtimeCodes';
 
 export function codes(
@@ -25,19 +24,18 @@ export function codes(
         isFetching: false,
         payload: action.payload,
       });
-    case DELETE_DTCODE:
+    case DELETE_RECEIVE_DTCODE:
       return Object.assign({}, state, {
         payload: state.payload.filter(code => parseInt(code.id, 10) !== parseInt(action.id, 10))
       });
-    case SELECT_DTCODE:
-      return Object.assign({}, state, {
-        activeCode: Object.assign({}, state.payload.find(code => code.id === action.id))
-      });
-    case ADD_DTCODE:
+    case ADD_RECEIVE_DTCODE:
+
+      console.log('action.code', action.code);
+
       return Object.assign({}, state, {
         payload: state.payload.concat([action.code])
       });
-    case UPDATE_DTCODE:
+    case UPDATE_RECEIVE_DTCODE:
       const payload = [...state.payload];
       const codeIndex = payload.findIndex(code => code.id === action.code.id);
       payload[codeIndex] = action.code;

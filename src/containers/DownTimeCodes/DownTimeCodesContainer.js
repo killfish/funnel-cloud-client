@@ -4,7 +4,6 @@ import DTToolbar from "components/Toolbar";
 import { connect } from 'react-redux';
 import {
   fetchCodes,
-  selectDTCode,
   deleteDTCode,
   addDTCode,
   updateDTCode
@@ -48,9 +47,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(fetchCodes());
     },
     actions: {
-      handleSelect: id => {
-        dispatch(selectDTCode(id));
-      },
       handleDelete: id => {
         dispatch(deleteDTCode(id));
       },

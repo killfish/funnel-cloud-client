@@ -1,26 +1,28 @@
 import timeout from "util/timeout";
 
-export const REQUEST_DTCODES = 'REQUEST_DTCODES';
-export const RECEIVE_DTCODES = 'RECEIVE_DTCODES';
-export const REQUEST_DTCODES_MODAL = 'REQUEST_DTCODES_MODAL';
-export const RECEIVE_DTCODES_MODAL = 'RECEIVE_DTCODES_MODAL';
-export const DELETE_DTCODE = 'DELETE_DTCODE';
-export const SELECT_DTCODE = 'SELECT_DTCODE';
-export const ADD_DTCODE = 'ADD_DTCODE';
-export const UPDATE_DTCODE = 'UPDATE_DTCODE';
-export const MODAL_OPEN = 'MODAL_OPEN';
-export const MODAL_CLOSE = 'MODAL_CLOSE';
-
 /**
  * @param dispatch
- * @returns {JSON}
+ * @param callback
+ * @param url
+ * @param reqOptions
+ * @returns {*}
  */
-const request = async(dispatch, callback, url) => {
-  let response = await fetch(url);
+const request = async(dispatch, callback, url, reqOptions) => {
+  const { wait = 0 } = reqOptions;
+  let response = await fetch(url, reqOptions);
   let data = await response.json();
-  await timeout(1000);
+  await timeout(wait);
   return dispatch(callback(data));
 };
+
+/*----------- Fetch DT codes -----------*/
+
+export const REQUEST_DTCODES = 'REQUEST_DTCODES';
+export const RECEIVE_DTCODES = 'RECEIVE_DTCODES';
+/**
+ * TODO: Add error handling
+ * TODO: Add optimistic updating
+ * **/
 
 /**
  * @returns {{type: string}}
@@ -48,17 +50,25 @@ function receiveDTCodes(payload) {
 export function fetchCodes() {
   return dispatch => {
     dispatch(requestDTCodes());
-    request(dispatch, receiveDTCodes, 'https://api.myjson.com/bins/1gp4q9');
+    request(dispatch, receiveDTCodes, 'https://floating-shelf-94243.herokuapp.com/dt-codes', { wait: 1000 });
   }
 }
 
+/*----------- Delete DT codes -----------*/
+
+export const DELETE_REQUEST_DTCODE = 'DELETE_REQUEST_DTCODE';
+export const DELETE_RECEIVE_DTCODE = 'DELETE_RECEIVE_DTCODE';
+/**
+ * TODO: Add error handling
+ * TODO: Add optimistic updating
+ * **/
 
 /**
  * @returns {{type: string}}
  */
-function requestDTCodesModal() {
+function requestDeleteDTCode() {
   return {
-    type: REQUEST_DTCODES_MODAL,
+    type: DELETE_REQUEST_DTCODE,
   }
 }
 
@@ -66,43 +76,51 @@ function requestDTCodesModal() {
  * @param payload
  * @returns {{type: string, payload: *}}
  */
-function receiveDTCodesModal(payload) {
+function receiveDeleteDTCode(payload) {
   return {
-    type: RECEIVE_DTCODES_MODAL,
-    payload: payload,
+    type: DELETE_RECEIVE_DTCODE,
+    id: payload.id,
   }
 }
 
-/**
- * @returns {function()}
- */
-export function fetchCodesModal() {
-  return dispatch => {
-    dispatch(requestDTCodesModal());
-    request(dispatch, receiveDTCodesModal, 'https://api.myjson.com/bins/1gp4q9');
-  }
-}
-
-
-/**
- * @param id
- * @returns {{type: string, id: *}}
- */
 export function deleteDTCode(id) {
+  return dispatch => {
+    dispatch(requestDeleteDTCode());
+    request(dispatch, receiveDeleteDTCode, 'https://floating-shelf-94243.herokuapp.com/dt-codes', {
+      method: "DELETE", headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }, body: JSON.stringify({ id: id })
+    });
+  }
+}
+
+/*----------- Add DT codes -----------*/
+
+export const ADD_REQUEST_DTCODE = 'ADD_REQUEST_DTCODE';
+export const ADD_RECEIVE_DTCODE = 'ADD_RECEIVE_DTCODE';
+/**
+ * TODO: Add error handling
+ * TODO: Add optimistic updating
+ * **/
+
+/**
+ * @returns {{type: string}}
+ */
+function requestAddDTCode() {
   return {
-    type: DELETE_DTCODE,
-    id: id,
+    type: ADD_REQUEST_DTCODE,
   }
 }
 
 /**
- * @param id
- * @returns {{type: string, id: *}}
+ * @param payload
+ * @returns {{type: string, payload: *}}
  */
-export function selectDTCode(id) {
+function receiveAddDTCode(payload) {
   return {
-    type: SELECT_DTCODE,
-    id: id,
+    type: ADD_RECEIVE_DTCODE,
+    code: payload,
   }
 }
 
@@ -111,9 +129,43 @@ export function selectDTCode(id) {
  * @returns {{type: string, code: {}}}
  */
 export function addDTCode(code = {}) {
+  return dispatch => {
+    dispatch(requestAddDTCode());
+    request(dispatch, receiveAddDTCode, 'https://floating-shelf-94243.herokuapp.com/dt-codes', {
+      method: "POST", headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }, body: JSON.stringify(code)
+    });
+  }
+}
+
+/*----------- Update DT codes -----------*/
+
+export const UPDATE_REQUEST_DTCODE = 'UPDATE_REQUEST_DTCODE';
+export const UPDATE_RECEIVE_DTCODE = 'UPDATE_RECEIVE_DTCODE';
+/**
+ * TODO: Add error handling
+ * TODO: Add optimistic updating
+ * **/
+
+/**
+ * @returns {{type: string}}
+ */
+function requestUpdateDTCode() {
   return {
-    type: ADD_DTCODE,
-    code: code,
+    type: UPDATE_REQUEST_DTCODE,
+  }
+}
+
+/**
+ * @param payload
+ * @returns {{type: string, payload: *}}
+ */
+function receiveUpdateDTCode(payload) {
+  return {
+    type: UPDATE_RECEIVE_DTCODE,
+    code: payload,
   }
 }
 
@@ -122,19 +174,13 @@ export function addDTCode(code = {}) {
  * @returns {{type: string, code: {}}}
  */
 export function updateDTCode(code = {}) {
-  return {
-    type: UPDATE_DTCODE,
-    code: code,
-  }
-}
-
-/**
- * @param open
- * @returns {{type: string, open: *}}
- */
-export function toggleModal(open) {
-  return {
-    type: open ? MODAL_OPEN : MODAL_CLOSE,
-    open: open,
+  return dispatch => {
+    dispatch(requestUpdateDTCode());
+    request(dispatch, receiveUpdateDTCode, `https://floating-shelf-94243.herokuapp.com/dt-codes/${code.id}`, {
+      method: "PUT", headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      }, body: JSON.stringify(code)
+    });
   }
 }
